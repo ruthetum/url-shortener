@@ -24,4 +24,6 @@ public class Url {
     private String origin;
 
     private String shorten;
+
+    private int freq;
 }

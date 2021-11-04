@@ -31,13 +31,16 @@ public class UrlService {
         if (url == null) {
             Url newUrl = Url.builder()
                     .origin(request.getTargetUrl())
+                    .freq(1)
                     .build();
             Url savedUrl = urlRepository.save(newUrl);
             savedUrl.setShorten(urlEncoder.encode(savedUrl.getId()));
             urlRepository.save(savedUrl);
             return CreateUrlDto.Response.fromEntity(savedUrl);
         } else {
-            return CreateUrlDto.Response.fromEntity(url);
+            url.setFreq(url.getFreq()+1);
+            Url savedUrl = urlRepository.save(url);
+            return CreateUrlDto.Response.fromEntity(savedUrl);
         }
     }
 
