@@ -9,13 +9,8 @@ public class UrlEncoder {
     private final String BASE62_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
     public String encode(Long urlId) {
-        try {
-            String encodeStr = encoding(urlId);
-            return encodeStr;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "";
+        String encodeStr = encoding(urlId);
+        return encodeStr;
     }
 
     private String encoding(long param) {
@@ -26,4 +21,20 @@ public class UrlEncoder {
         }
         return sb.toString();
     }
+
+    public long urlDecoder(String encodeStr) {
+        long decodeVal = decoding(encodeStr);
+        return decodeVal;
+    }
+
+    private long decoding(String param) {
+        long sum = 0;
+        long power = 1;
+        for (int i = 0; i < param.length(); i++) {
+            sum += BASE62_CHAR.indexOf(param.charAt(i)) * power;
+            power *= BASE62;
+        }
+        return sum;
+    }
+
 }

@@ -1,5 +1,5 @@
 environments:
-  address: http://localhost/
+  address: http://localhost:8080/
 
 spring:
   datasource:

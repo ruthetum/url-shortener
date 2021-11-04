@@ -53,4 +53,14 @@ public class UrlService {
             !targetUrl.startsWith(HTTPS.getPrefix()))
             throw new UrlException(INVALID_URL);
     }
+
+    @Transactional(readOnly = true)
+    public String findShortenUrl(String shorten) {
+        Long urlId = urlEncoder.urlDecoder(shorten);
+        Url url = urlRepository.findById(urlId).orElse(null);
+        if (url != null)
+            return url.getOrigin();
+        else
+            return null;
+    }
 }

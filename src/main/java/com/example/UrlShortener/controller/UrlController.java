@@ -20,7 +20,7 @@ public class UrlController {
     public CreateUrlDto.Response createShortenUrl(
         @Valid @RequestBody CreateUrlDto.Request request
     ) {
-        log.info("/api/url - {}", request.getTargetUrl());
+        log.info("POST /api/url - {}", request.getTargetUrl());
         return urlService.createShortenUrl(request);
     }
 }
