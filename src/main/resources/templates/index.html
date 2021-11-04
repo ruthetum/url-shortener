@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Url shortener</title>
+</head>
+<body>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <div class="container">
+        <h5 class="card-header">URL 단축 생성기 😀</h5>
+        <p>단축하고 싶은 URL을 입력해주세요. (http를 포함해주세요!)</p>
+        <p>ex. http://localhost/user, https://www.onstove.com/</p>
+        <form>
+            <div class="col-12">
+                <input id="input" placeholder="URL을 입력해주세요" type="text" size="50">
+                <button type="button" onclick="makeShortenUrl()">shorten</button>
+            </div>
+            <br/>
+            <div id="result">
+            </div>
+       </form>
+    </div>
+</body>
+<script>
+    makeShortenUrl = () => {
+        const targetUrl = document.getElementById("input").value;
+        const CreateUrlDtoRequest = { targetUrl: targetUrl };
+        $.ajax({
+            url: "/api/url",
+            contentType: "application/json",
+            data: JSON.stringify(CreateUrlDtoRequest),
+            type:"POST",
+            error : function(error) {
+                alert("요청 중 에러가 발생했습니다.");
+            },
+            success : function(data) {
+                if (data.status >= 400) {
+                    document.getElementById("result").innerText = data.errorMessage;
+                } else {
+                    document.getElementById("result").innerText = data.shorten;
+                }
+
+            }
+        });
+    }
+</script>
+</html>
